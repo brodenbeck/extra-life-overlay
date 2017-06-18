@@ -12,12 +12,82 @@
     font-style: normal;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2 {
 
     font-family: 'furore', sans-serif;
+    color: #23c1e8;
+    text-shadow: 2px 3px 6px black;
+}
+
+h3 {
+
+    font-family: 'furore', sans-serif;
+    color: white;
 }
 
 p, li, a {
 
     font-family: 'cantarell', sans-serif;
+    color: white;
+    text-shadow: 2px 3px 6px black;
+}
+
+.completion {
+
+    margin-bottom: 20px;
+}
+
+.completion p {
+
+    display: inline;
+}
+
+.participant-data h1,
+.team-data h2 {
+
+    margin: 0 0 5px;
+}
+
+.participant-data p,
+.team-data p {
+
+    margin: 0;
+}
+
+#has_data {
+
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    max-width: 40%;
+}
+
+#countdown {
+
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    max-width: 200px;
+    background-color: #96d400;
+    box-shadow: 0px 6px 0px #278000, 
+                0px 4px 13px rgba( 0, 0, 0, 0.1 );
+    padding: 20px;
+}
+
+#countdown h3,
+#countdown p {
+
+    text-align: center;
+    text-shadow: none;
+}
+
+#logo {
+
+    background: url( ./images/logo-extra-life.png ) bottom right no-repeat;
+    background-size: contain;
+    height: 100px;
+    width: 300px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
 }

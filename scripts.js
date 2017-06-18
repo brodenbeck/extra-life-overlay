@@ -49,8 +49,8 @@ function replaceTeam() {
 	if( team_json != undefined ) {
 
 		name.innerHTML  = team_json.name;
-		goal.innerHTML  = team_json.fundraisingGoal;
-		total.innerHTML = team_json.totalRaisedAmount;
+		goal.innerHTML  = '$' + team_json.fundraisingGoal;
+		total.innerHTML = '$' + team_json.totalRaisedAmount;
 	}
 }
 
@@ -63,8 +63,8 @@ function replaceParticipant() {
 	if( participant_json != undefined ) {
 
 		name.innerHTML  = participant_json.displayName;
-		goal.innerHTML  = participant_json.fundraisingGoal;
-		total.innerHTML = participant_json.totalRaisedAmount;
+		goal.innerHTML  = '$' + participant_json.fundraisingGoal;
+		total.innerHTML = '$' + participant_json.totalRaisedAmount;
 	}
 }
 
