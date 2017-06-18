@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'furore';
+    src: url( 'fonts/Furore.ttf' );
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'cantarell';
+    src: url( 'fonts/Cantarell.ttf' );
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+
+    font-family: 'furore', sans-serif;
+}
+
+p, li, a {
+
+    font-family: 'cantarell', sans-serif;
+}
