@@ -1,15 +1,13 @@
-var team_id 	   = getParameterByName( 'teamId' );
-var participant_id = getParameterByName( 'participantId' );
-
-var team_url 		= 'https://www.extra-life.org/index.cfm?fuseaction=donorDrive.team&teamID=' + team_id + '&format=json';
+var participant_id  = getParameterByName( 'participantId' );
 var participant_url = 'https://www.extra-life.org/index.cfm?fuseaction=donorDrive.participant&participantID=' + participant_id + '&format=json';
-
-var team_json;
 var participant_json;
+
+var team_id;
+var team_url;
+var team_json;
 
 var countdown_date = new Date( 'Nov 5, 2017 00:00:00' ).getTime();
 
-setInterval( refreshTeam, 		 1000 );
 setInterval( refreshParticipant, 1000 );
 setInterval( countdown, 		 1000 );
 
@@ -22,7 +20,17 @@ function refreshTeam() {
 function refreshParticipant() {
 
 	replaceParticipant();
-	httpGet( participant_url, function( response ) { participant_json = response; });
+	httpGet( participant_url, function( response ) { 
+
+		participant_json = response; 
+		team_id			 = response.teamID;
+	});
+
+	if( team_id != undefined ) {
+
+		team_url = 'https://www.extra-life.org/index.cfm?fuseaction=donorDrive.team&teamID=' + team_id + '&format=json'
+		setInterval( refreshTeam, 1000 );
+	}
 }
 
 function httpGet( url, callback ) {
@@ -89,7 +97,7 @@ function countdown() {
 	var minutes_in_hour   = 60;
 	var seconds_in_minute = 60;
 
-	var days 	= Math.floor( distance / ( 1000 * seconds_in_minute * minutes_in_hour * hours_in_day ) );
+	var days 	= Math.floor(   distance / ( 1000 * seconds_in_minute * minutes_in_hour * hours_in_day ) );
 	var hours   = Math.floor( ( distance % ( 1000 * seconds_in_minute * minutes_in_hour * hours_in_day ) ) / ( 1000 * seconds_in_minute * minutes_in_hour ) );
 	var minutes = Math.floor( ( distance % ( 1000 * seconds_in_minute * minutes_in_hour ) ) / ( 1000 * minutes_in_hour ) );
 	var seconds = Math.floor( ( distance % ( 1000 * seconds_in_minute ) ) / 1000 );
