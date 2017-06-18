@@ -7,32 +7,59 @@ var team_url;
 var team_json;
 
 var countdown_date = new Date( 'Nov 5, 2017 00:00:00' ).getTime();
+var one_minute = 60000;
+var one_second = 1000;
 
-setInterval( refreshParticipant, 1000 );
-setInterval( countdown, 		 1000 );
+getTeamUrl();
+getParticipantData();
 
-function refreshTeam() {
+setInterval( getTeamData, 		 one_minute );
+setInterval( getParticipantData, one_minute );
+setInterval( countdown,			 one_second );
 
-	replaceTeam();
-	httpGet( team_url, function( response ) { team_json = response; });
-}
+/**
+ * assigns the team_url based on a get request to the participant's data
+ */
+function getTeamUrl() {
 
-function refreshParticipant() {
-
-	replaceParticipant();
 	httpGet( participant_url, function( response ) { 
 
-		participant_json = response; 
-		team_id			 = response.teamID;
+		team_id	  = response.teamID;
+		team_url  = 'https://www.extra-life.org/index.cfm?fuseaction=donorDrive.team&teamID=' + team_id + '&format=json';
+		getTeamData();
 	});
-
-	if( team_id != undefined ) {
-
-		team_url = 'https://www.extra-life.org/index.cfm?fuseaction=donorDrive.team&teamID=' + team_id + '&format=json'
-		setInterval( refreshTeam, 1000 );
-	}
 }
 
+/**
+ * gets the team's data and calls a function to replace data on the page
+ */
+function getTeamData() {
+
+	httpGet( team_url, function( response ) {
+
+		team_json = response;
+		replaceTeam();
+	});
+}
+
+/**
+ * gets the participant's data and calls a function to replace data on the page
+ */
+function getParticipantData() {
+
+	httpGet( participant_url, function( response ) {
+
+		participant_json = response;
+		replaceParticipant();
+	});
+}
+
+/**
+ * get request to a given url that returns parsed JSON response when the request is ready
+ * 
+ * @param {*} url 
+ * @param {*} callback 
+ */
 function httpGet( url, callback ) {
 
 	var xhr = new XMLHttpRequest();
@@ -48,6 +75,9 @@ function httpGet( url, callback ) {
 	xhr.send( null );
 }
 
+/**
+ * replaces team content on the page with JSON received
+ */
 function replaceTeam() {
 
 	var name  = document.getElementById( 'team_name'  );
@@ -62,6 +92,9 @@ function replaceTeam() {
 	}
 }
 
+/**
+ * replaces participant content on the page with JSON received
+ */
 function replaceParticipant() {
 
 	var name  = document.getElementById( 'participant_name'  );
@@ -76,6 +109,11 @@ function replaceParticipant() {
 	}
 }
 
+/**
+ * with a passed-in parameter from a query string, finds the value
+ * 
+ * @param {*} name 
+ */
 function getParameterByName( name ) {
 
     var url 	= window.location.href;
@@ -89,6 +127,9 @@ function getParameterByName( name ) {
     return decodeURIComponent( results[2].replace( /\+/g, " " ) );
 }
 
+/**
+ * counts down to countdown_date and replaces on page
+ */
 function countdown() {
 
 	var now 			  = new Date().getTime();
